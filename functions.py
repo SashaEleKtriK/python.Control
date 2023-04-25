@@ -13,6 +13,7 @@ def sort_by_rating(market_list, reverse=False):
     sorted_list = sorted(market_list, reverse=reverse, key=lambda rating: get_total_rating(rating))
     return sorted_list
 
+
 def delete_market(market):
     conn = sqlite3.connect('markets.db')
     cur = conn.cursor()
@@ -23,12 +24,16 @@ def delete_market(market):
     cur.execute(f"DELETE FROM rate WHERE market = {market[0]};")
     conn.commit()
     return get_markets_list()
+
+
 def delete_review(review):
     conn = sqlite3.connect('markets.db')
     cur = conn.cursor()
     print(review)
     cur.execute(f"DELETE FROM rate WHERE id = {review[-1]};")
     conn.commit()
+
+
 def get_market_str(market):
     rating = get_total_rating(market)
     return f"Name: {market[1]}; Addres: {market[2]}, {market[3]}, {market[4]}; FMID: {market[5]}, rating: {rating}"
@@ -47,8 +52,6 @@ def print_list(markets):
 
 
 def print_all_markets(markets):
-    conn = sqlite3.connect('markets.db')
-    cur = conn.cursor()
     for market in markets:
         print(get_market_str(market))
 

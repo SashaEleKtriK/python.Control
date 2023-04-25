@@ -129,10 +129,12 @@ class AllMarketInfoWindow(QMainWindow):
     def _the_send_market_review(self, m):
         self.new_window = MakeReviewWin(self, m, self.userid)
         self.new_window.show()
+
     def market_deleting(self):
         new_list = functions.delete_market(self.current_market)
         self.parent().build(new_list)
         self.close()
+
     def review_deleting(self, review):
         functions.delete_review(review)
         self.build(self.current_market)
@@ -155,7 +157,7 @@ class AllMarketsWindow(QMainWindow):
         self.vbox = QVBoxLayout()
         username = QLabel(f"User: {functions.get_user_name(self.userid)}", self)
         self.vbox.addWidget(username)
-        sort_cs_btn_asc =QPushButton("Sorting by city and state (asc)")
+        sort_cs_btn_asc = QPushButton("Sorting by city and state (asc)")
         sort_cs_btn_asc.clicked.connect(self.sort_city_state)
         self.vbox.addWidget(sort_cs_btn_asc)
         sort_cs_btn_desc = QPushButton("Sorting by city and state (desc)")
@@ -183,6 +185,7 @@ class AllMarketsWindow(QMainWindow):
     def _the_market_was_choice(self, m):
         self.new_window = AllMarketInfoWindow(self, m, self.userid)
         self.new_window.show()
+
     def sort_city_state(self, reverse=False):
         new_list = functions.sort_by_city_state(self.markets, reverse=reverse)
         self.build(new_list)
@@ -190,6 +193,8 @@ class AllMarketsWindow(QMainWindow):
     def sort_rating(self, reverse=False):
         new_list = functions.sort_by_rating(self.markets, reverse=reverse)
         self.build(new_list)
+
+
 class SearchingFMIDWin(QMainWindow):
     def __init__(self, parent=None, user=None):
         super().__init__(parent)
@@ -221,6 +226,7 @@ class SearchingFMIDWin(QMainWindow):
         result = functions.search_by_FMID(all_markets, search_text)
         self.res_win = AllMarketsWindow(self, self.userid, market_list=result)
         self.res_win.show()
+
 
 class SearchingCityStateWin(QMainWindow):
     def __init__(self, parent=None, user=None):
@@ -322,7 +328,6 @@ class SearchingRadiusWin(QMainWindow):
             print("error")
             self.show_dialog()
 
-
     def show_dialog(self):
         msg_box = QMessageBox()
         msg_box.setText("Check input. x = ##.####, y = ##.####")
@@ -423,10 +428,13 @@ class UserChoice(QMainWindow):
         new_user_id = functions.add_user(self.user_text_box.text())
         self._the_user_was_choice(new_user_id)
 
+
 def run():
     app = QApplication(sys.argv)
     ex = UserChoice()
     ex.show()
     sys.exit(app.exec())
+
+
 if __name__ == '__main__':
     run()
